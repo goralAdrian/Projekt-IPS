@@ -88,6 +88,15 @@ const Menu = ({ history }) => (
                        Profil użytkownika
                    </Link>
                    </li>
+				   <li className="nav-item">
+                   <Link
+                       className="nav-link"
+                       style={isActive(history, "/toBuy")}
+                       to="/toBuy"
+                   >
+                       Koszyk
+                   </Link>
+				   </li>
                </>
            )}
        </ul>
