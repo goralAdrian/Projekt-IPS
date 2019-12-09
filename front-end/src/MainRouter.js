@@ -5,6 +5,7 @@ import Menu from "./core/Menu"
 import Signup from "./user/Signup"
 import Signin from "./user/Signin"
 import Profile from "./user/Profile"
+import toBuy from "./user/toBuy"
 
 const MainRouter = () => (
   <div>
@@ -14,6 +15,7 @@ const MainRouter = () => (
   <Route exact path = "/signup" component = {Signup} />
   <Route exact path = "/signin" component = {Signin} />
   <Route exact path = "/profile" component = {Profile} />
+  <Route exact path = "/toBuy" component = {toBuy} />
   </Switch>
   </div>
 )
