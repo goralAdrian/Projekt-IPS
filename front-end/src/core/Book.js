@@ -5,7 +5,10 @@ const Book = () => (
   <h2>Księgarnia internetowa</h2>
   </div>
   <div className="jumbotron">
-  
+	Tytuł:
+	<br/>
+	Cena:
+	<br/>
   </div>
 );
 
