@@ -31,11 +31,13 @@ const userSchema = new mongoose.Schema({
         type: String,
         trim: true
     }
+/*
 	countBooks:{
 		type: String;
 		trim: true;
 		required: true;
 	}
+*/
 });
 
 userSchema
