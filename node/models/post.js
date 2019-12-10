@@ -22,6 +22,10 @@ const postSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     }
+	countBuyed: {
+		type: Int;
+		required: true;
+	}
 });
 
 module.exports = mongoose.model("Post", postSchema);
