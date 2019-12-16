@@ -35,31 +35,18 @@ if(baseConfig === false){
 // Validate the payment gateway config
 switch(config.paymentGateway){
     case'paypal':
-        if(ajv.validate(require('./config/paypalSchema'), require('./config/paypal.json')) === false){
-            console.log(colors.red(`PayPal config is incorrect: ${ajv.errorsText()}`));
-            process.exit(2);
-        }
+
         break;
 
     case'stripe':
-        if(ajv.validate(require('./config/stripeSchema'), require('./config/stripe.json')) === false){
-            console.log(colors.red(`Stripe config is incorrect: ${ajv.errorsText()}`));
-            process.exit(2);
-        }
         break;
 
     case'authorizenet':
-        if(ajv.validate(require('./config/authorizenetSchema'), require('./config/authorizenet.json')) === false){
-            console.log(colors.red(`Authorizenet config is incorrect: ${ajv.errorsText()}`));
-            process.exit(2);
-        }
+        
         break;
 
     case'adyen':
-        if(ajv.validate(require('./config/adyenSchema'), require('./config/adyen.json')) === false){
-            console.log(colors.red(`adyen config is incorrect: ${ajv.errorsText()}`));
-            process.exit(2);
-        }
+        
         break;
 }
 
@@ -71,6 +58,7 @@ const customer = require('./routes/customer');
 const order = require('./routes/order');
 const user = require('./routes/user');
 const paypal = require('./routes/payments/pay');
+const pay = require('./routes/payments/pay');
 const stripe = require('./routes/payments/pay');
 const authorizenet = require('./routes/payments/authorizenet');
 const adyen = require('./routes/payments/pay');
@@ -329,10 +317,8 @@ app.use('/', product);
 app.use('/', order);
 app.use('/', user);
 app.use('/', admin);
-app.use('/pay', paypal);
-app.use('/pay', stripe);
+app.use('/pay', pay);
 app.use('/authorizenet', authorizenet);
-app.use('/pay', adyen);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
