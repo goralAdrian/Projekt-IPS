@@ -30,7 +30,7 @@
 }
 
 .navbarMenu>ul>li>a:hover{
-    color: #cc4135 !important;
+    color: #35a9cc !important;
 }
 
 .navbarMenu{
@@ -39,7 +39,7 @@
 }
 
 .product_wrapper>a:hover{
-    color: #cc4135 !important;
+    color: #35a9cc !important;
 }
 
 .navbar-static-top, .navbar-header, #navbar>.navbar-nav, #navbar>.navbar-nav>li>a{
@@ -52,11 +52,11 @@
 }
 
 .pagination>li>a{
-    background-color: #cc4135 !important;
+    background-color: #35a9cc !important;
 }
 
 .navbar-brand{
-    color: #cc4135 !important;
+    color: #35a9cc !important;
     letter-spacing: 4px;
     padding-left: 20px !important;
     padding-top: 20px !important;
@@ -71,24 +71,24 @@
 }
 
 .navbar-default .badge {
-    background-color: #cc4135;
+    background-color: #35a9cc;
 }
 
 .pushy-link, #empty-cart{
-    border-color: #E74C3C;
-    background-color: #E74C3C;
+    border-color: #3c8ce7;
+    background-color: #3c8ce7;
 }
 
 .pushy-link:hover, .pushy-link:focus, .pushy-link:active, .pushy-link:active:hover, 
 #empty-cart:hover, #empty-cart:focus, #empty-cart:active, #empty-cart:active:hover{
-    border-color: #cc4135;
-    background-color: #cc4135;
+    border-color: #35a9cc;
+    background-color: #35a9cc;
 }
 
 .navActive>a{
     margin-bottom: 0px;
     padding-top: 15px;
-    border-bottom: 5px solid #E74C3C;
+    border-bottom: 5px solid #3c8ce7;
 }
 
 .navbar-static-top, #navbar, .navbar-header, #navbar>.navbar-nav, #navbar>.navbar-nav>li>a {
@@ -96,7 +96,7 @@
 }
 
 .navbar-default .navbar-nav>li>a {
-    color: #838b8f;
+    color: #94c8e3;
     font-size: 20px;
 }
 
@@ -134,7 +134,7 @@
  
     .navActive>a{
         color: white !important;
-        background-color: #E74C3C;
+        background-color: #3c8ce7;
         border-bottom: none;
     }
 

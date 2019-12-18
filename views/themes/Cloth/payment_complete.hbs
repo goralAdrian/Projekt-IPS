@@ -2,9 +2,9 @@
     <div class="row">
         <div class="text-center col-md-10 col-md-offset-1">
             {{#ifCond result.orderStatus '==' 'Paid'}}
-                <h2 class="text-success">{{ @root.__ "Your payment has been successfully processed" }}</h2>
+                <h2 class="text-success">{{ @root.__ "Płatność przeprowadzono pomyślnie" }}</h2>
             {{else}}
-                <h2 class="text-danger">{{ @root.__ "Your payment has failed. Please try again or contact us." }}</h2>
+                <h2 class="text-danger">{{ @root.__ "NIe udało się przeprowadzić pomyślnie, spróbuj ponownie." }}</h2>
             {{/ifCond}}
             {{#if result}}
                 <div>
@@ -13,7 +13,7 @@
                 </div>
             {{/if}} 
             {{#ifCond result.orderStatus '==' 'Paid'}}
-                <h3 class="text-warning">{{ @root.__ "Please retain the details above as a reference of payment." }}</h3>
+                <h3 class="text-warning">{{ @root.__ "Proszę zachować szczegóły płatności." }}</h3>
             {{/ifCond}}
             <a href="/" class="btn btn-warning">Home</a>
         </div>
