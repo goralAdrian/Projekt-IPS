@@ -53,6 +53,7 @@ switch(config.paymentGateway){
 // require the routes
 const index = require('./routes/index');
 const admin = require('./routes/admin');
+const users = require('./routes/users');
 const product = require('./routes/product');
 const customer = require('./routes/customer');
 const order = require('./routes/order');
@@ -317,6 +318,7 @@ app.use('/', product);
 app.use('/', order);
 app.use('/', user);
 app.use('/', admin);
+app.use('/', users);
 app.use('/pay', pay);
 app.use('/authorizenet', authorizenet);
 
