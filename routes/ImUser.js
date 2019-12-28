@@ -67,39 +67,6 @@ router.get('/admin/setup', async (req, res) => {
     res.redirect('/admin/login');
 });
 
-// insert a user
-router.post('/admin/setup_action', async (req, res) => {
-    const db = req.app.db;
-
-    const doc = {
-        usersName: req.body.usersName,
-        userEmail: req.body.userEmail,
-        userPassword: bcrypt.hashSync(req.body.userPassword, 10),
-        isAdmin: true,
-        isOwner: true
-    };
-
-    // check for users
-    const userCount = await db.users.countDocuments({});
-    if(userCount === 0){
-        // email is ok to be used.
-        try{
-            await db.users.insertOne(doc);
-            req.session.message = 'User account inserted';
-            req.session.messageType = 'success';
-            res.redirect('/admin/login');
-            return;
-        }catch(ex){
-            console.error(colors.red('Nie uda³o siê wstawiæ u¿ytkownika: ' + ex));
-            req.session.message = 'Setup failed';
-            req.session.messageType = 'danger';
-            res.redirect('/admin/setup');
-            return;
-        }
-    }
-    res.redirect('/admin/login');
-});
-
 // settings
 router.get('/admin/settings', restrict, (req, res) => {
     res.render('settings', {
@@ -163,23 +130,6 @@ router.get('/admin/settings/menu', restrict, async (req, res) => {
     });
 });
 
-// page list
-router.get('/admin/settings/pages', restrict, async (req, res) => {
-    const db = req.app.db;
-    const pages = await db.pages.find({}).toArray();
-
-    res.render('settings_pages', {
-        title: 'Strona',
-        pages: pages,
-        session: req.session,
-        admin: true,
-        message: common.clearSessionValue(req.session, 'message'),
-        messageType: common.clearSessionValue(req.session, 'messageType'),
-        helpers: req.handlebars.helpers,
-        config: req.app.config,
-        menu: common.sortMenu(await common.getMenu(db))
-    });
-});
 
 // pages new
 router.get('/admin/settings/pages/new', restrict, checkAccess, async (req, res) => {
@@ -196,113 +146,6 @@ router.get('/admin/settings/pages/new', restrict, checkAccess, async (req, res) 
         config: req.app.config,
         menu: common.sortMenu(await common.getMenu(db))
     });
-});
-
-// pages editor
-router.get('/admin/settings/pages/edit/:page', restrict, checkAccess, async (req, res) => {
-    const db = req.app.db;
-    const page = await db.pages.findOne({ _id: common.getId(req.params.page) });
-    const menu = common.sortMenu(await common.getMenu(db));
-    if(!page){
-        res.status(404).render('error', {
-            title: 'B³¹d 404, nie znaleziono strony',
-            config: req.app.config,
-            message: 'B³¹d 404, nie znaleziono strony',
-            helpers: req.handlebars.helpers,
-            showFooter: 'showFooter',
-            menu
-        });
-        return;
-    }
-
-    res.render('settings_page', {
-        title: 'Static pages',
-        page: page,
-        button_text: 'Update',
-        session: req.session,
-        admin: true,
-        message: common.clearSessionValue(req.session, 'message'),
-        messageType: common.clearSessionValue(req.session, 'messageType'),
-        helpers: req.handlebars.helpers,
-        config: req.app.config,
-        menu
-    });
-});
-
-// insert/update page
-router.post('/admin/settings/page', restrict, checkAccess, async (req, res) => {
-    const db = req.app.db;
-
-    const doc = {
-        pageName: req.body.pageName,
-        pageSlug: req.body.pageSlug,
-        pageEnabled: req.body.pageEnabled,
-        pageContent: req.body.pageContent
-    };
-
-    if(req.body.pageId){
-        // existing page
-        const page = await db.pages.findOne({ _id: common.getId(req.body.pageId) });
-        if(!page){
-            res.status(400).json({ message: 'Nie znaleziono strony' });
-            return;
-        }
-
-        try{
-            const updatedPage = await db.pages.findOneAndUpdate({ _id: common.getId(req.body.pageId) }, { $set: doc }, { returnOriginal: false });
-            res.status(200).json({ message: 'Stronê zaktualizowano z sukcesem', pageId: req.body.pageId, page: updatedPage.value });
-        }catch(ex){
-            res.status(400).json({ message: 'Wyst¹pi³ b³¹d, proszê spróbowaæ ponownie' });
-        }
-    }else{
-        // insert page
-        try{
-            const newDoc = await db.pages.insertOne(doc);
-            res.status(200).json({ message: 'Utworzono now¹ stronê pomyœlnie', pageId: newDoc.insertedId });
-            return;
-        }catch(ex){
-            res.status(400).json({ message: 'Wyst¹pi³ b³¹d, proszê spróbowaæ ponownie' });
-        }
-    }
-});
-
-// delete page
-router.post('/admin/settings/page/delete', restrict, checkAccess, async (req, res) => {
-    const db = req.app.db;
-
-    const page = await db.pages.findOne({ _id: common.getId(req.body.pageId) });
-    if(!page){
-        res.status(400).json({ message: 'Nie znaleziono strony' });
-        return;
-    }
-
-    try{
-        await db.pages.deleteOne({ _id: common.getId(req.body.pageId) }, {});
-        res.status(200).json({ message: 'Stronê usuniêto pomyœlnie' });
-        return;
-    }catch(ex){
-        res.status(400).json({ message: 'WYst¹pi³ b³¹d podczas usuwania strony, proszê spróbowaæ ponownie' });
-    }
-});
-
-// new menu item
-router.post('/admin/settings/menu/new', restrict, checkAccess, (req, res) => {
-    const result = common.newMenu(req);
-    if(result === false){
-        res.status(400).json({ message: 'B³¹d podczas tworzenia menu' });
-        return;
-    }
-    res.status(200).json({ message: 'Menu zosta³o utworzone poprawnie' });
-});
-
-// update existing menu item
-router.post('/admin/settings/menu/update', restrict, checkAccess, (req, res) => {
-    const result = common.updateMenu(req);
-    if(result === false){
-        res.status(400).json({ message: 'B³¹d podczas aktualizacji menu' });
-        return;
-    }
-    res.status(200).json({ message: 'Menu zosta³o zaktualizowane pomyœlnie.' });
 });
 
 // delete menu item
