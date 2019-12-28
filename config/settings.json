@@ -25,6 +25,6 @@
     "theme": "Cloth",
     "trackStock": false,
     "orderHook": "",
-    "availableLanguages": ["pl", "en", "it"],
+    "availableLanguages": ["pl"],
     "defaultLocale": "pl"
 }
