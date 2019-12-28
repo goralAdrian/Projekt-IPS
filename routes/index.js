@@ -26,7 +26,7 @@ router.get('/payment/:orderId', async (req, res, next) => {
     // Get the order
     const order = await db.orders.findOne({ _id: getId(req.params.orderId) });
     if(!order){
-        res.render('error', { title: 'Not found', message: 'Order not found', helpers: req.handlebars.helpers, config });
+        res.render('error', { title: 'Nie znaleziono', message: 'Ksi¹¿nki nie znaleziono', helpers: req.handlebars.helpers, config });
         return;
     }
 
@@ -78,7 +78,7 @@ router.get('/checkout', async (req, res, next) => {
 
     // if there is no items in the cart then render a failure
     if(!req.session.cart){
-        req.session.message = 'The are no items in your cart. Please add some items before checking out';
+        req.session.message = 'Twój koszyk jest pusty, dodaj ksi¹¿kê :)';
         req.session.messageType = 'danger';
         res.redirect('/');
         return;
@@ -104,7 +104,7 @@ router.get('/pay', async (req, res, next) => {
 
     // if there is no items in the cart then render a failure
     if(!req.session.cart){
-        req.session.message = 'The are no items in your cart. Please add some items before checking out';
+        req.session.message = 'Twój koszyk jest pusty, dodaj ksi¹¿kê :)';
         req.session.messageType = 'danger';
         res.redirect('/checkout');
         return;
@@ -152,11 +152,11 @@ router.get('/product/:id', async (req, res) => {
 
     const product = await db.products.findOne({ $or: [{ _id: getId(req.params.id) }, { productPermalink: req.params.id }] });
     if(!product){
-        res.render('error', { title: 'Not found', message: 'Order not found', helpers: req.handlebars.helpers, config });
+        res.render('error', { title: 'Nie znaleziono', message: 'Zamówienia nie znaleziono', helpers: req.handlebars.helpers, config });
         return;
     }
     if(product.productPublished === false){
-        res.render('error', { title: 'Not found', message: 'Product not found', helpers: req.handlebars.helpers, config });
+        res.render('error', { title: 'Nie znaleziono', message: 'Ksi¹¿ki nie znaleziono', helpers: req.handlebars.helpers, config });
         return;
     }
     const productOptions = product.productOptions;
@@ -244,9 +244,9 @@ router.post('/product/updatecart', (req, res, next) => {
             res.status(200).json({ message: 'Koszyk zaktualizowano', totalCartItems: Object.keys(req.session.cart).length });
         }else{
             if(stockError){
-                res.status(400).json({ message: 'There is insufficient stock of this product.', totalCartItems: Object.keys(req.session.cart).length });
+                res.status(400).json({ message: 'Niestety nie mamy ów ksi¹¿ki na stanie', totalCartItems: Object.keys(req.session.cart).length });
             }else{
-                res.status(400).json({ message: 'There was an error updating the cart', totalCartItems: Object.keys(req.session.cart).length });
+                res.status(400).json({ message: 'Podczas aktualizacji koszyka wkrad³ siê b³¹d :/', totalCartItems: Object.keys(req.session.cart).length });
             }
         }
     });
@@ -278,9 +278,9 @@ router.post('/product/removefromcart', async (req, res, next) => {
     updateSubscriptionCheck(req, res);
 
     if(itemRemoved === false){
-        return res.status(400).json({ message: 'Product not found in cart' });
+        return res.status(400).json({ message: 'Koszyk jest pusty' });
     }
-    return res.status(200).json({ message: 'Product successfully removed', totalCartItems: Object.keys(req.session.cart).length });
+    return res.status(200).json({ message: 'Ksi¹¿nkê usuniêto pomyœlnie', totalCartItems: Object.keys(req.session.cart).length });
 });
 
 // Totally empty the cart
@@ -306,11 +306,11 @@ const emptyCart = async (req, res, type) => {
 
     // If POST, return JSON else redirect nome
     if(type === 'json'){
-        res.status(200).json({ message: 'Cart successfully emptied', totalCartItems: 0 });
+        res.status(200).json({ message: 'Koszyk opró¿niono', totalCartItems: 0 });
         return;
     }
 
-    req.session.message = 'Cart successfully emptied.';
+    req.session.message = 'Koszyk opró¿niono';
     req.session.messageType = 'success';
     res.redirect('/');
 };
@@ -341,13 +341,13 @@ router.post('/product/addtocart', async (req, res, next) => {
 
     // If cart already has a subscription you cannot add anything else
     if(req.session.cartSubscription){
-        return res.status(400).json({ message: 'Subscription already existing in cart. You cannot add more.' });
+        return res.status(400).json({ message: 'Nie mo¿na wiêcej wzi¹œæ ksi¹¿ek' });
     }
 
     // If existing cart isn't empty check if product is a subscription
     if(req.session.cart.length !== 0){
         if(product.productSubscription){
-            return res.status(400).json({ message: 'You cannot combine scubscription products with existing in your cart. Empty your cart and try again.' });
+            return res.status(400).json({ message: 'W koszyku jest za du¿o ksi¹¿ek, opró¿nij koszyk i spróbuj ponownie' });
         }
     }
 
@@ -380,7 +380,7 @@ router.post('/product/addtocart', async (req, res, next) => {
 
             // Check there is sufficient stock
             if(productQuantity > netStock){
-                return res.status(400).json({ message: 'There is insufficient stock of this product.' });
+                return res.status(400).json({ message: 'Brakuje ksi¹¿ek na stanie' });
             }
         }
     }
@@ -454,7 +454,7 @@ router.post('/product/addtocart', async (req, res, next) => {
 
     // update how many products in the shopping cart
     req.session.cartTotalItems = req.session.cart.reduce((a, b) => +a + +b.quantity, 0);
-    return res.status(200).json({ message: 'Cart successfully updated', totalCartItems: req.session.cartTotalItems });
+    return res.status(200).json({ message: 'Koszyk zaktualizowano poprawnie', totalCartItems: req.session.cartTotalItems });
 });
 
 // search products
@@ -507,7 +507,7 @@ router.get('/search/:searchTerm/:pageNum?', (req, res) => {
             });
         })
         .catch((err) => {
-            console.error(colors.red('Error searching for products', err));
+            console.error(colors.red('B³¹d podczas poszukiwania ksi¹¿ki', err));
         });
 });
 
@@ -564,7 +564,7 @@ router.get('/category/:cat/:pageNum?', (req, res) => {
             });
         })
         .catch((err) => {
-            console.error(colors.red('Error getting products for category', err));
+            console.error(colors.red('B³¹d podczas wyboru ksi¹¿ki z kategorii', err));
         });
 });
 
@@ -642,7 +642,7 @@ router.get('/page/:pageNum', (req, res, next) => {
             });
         })
         .catch((err) => {
-            console.error(colors.red('Error getting products for page', err));
+            console.error(colors.red('B³¹d podczas pobierania ksi¹¿ek na stronê', err));
         });
 });
 
@@ -684,7 +684,7 @@ router.get('/:page?', async (req, res, next) => {
                 });
             })
             .catch((err) => {
-                console.error(colors.red('Error getting products for page', err));
+                console.error(colors.red('B³¹d podczas pobierania ksi¹¿ek na stronê', err));
             });
     }else{
         if(req.params.page === 'admin'){
