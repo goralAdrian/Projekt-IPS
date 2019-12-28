@@ -11,13 +11,8 @@ const mime = require('mime-type/with-db');
 const ObjectId = require('mongodb').ObjectID;
 const router = express.Router();
 
-// Admin section
-router.get('/admin', restrict, (req, res, next) => {
-    res.redirect('/admin/orders');
-});
-
 // logout
-router.get('/admin/logout', (req, res) => {
+router.get('/ImUser/logout', (req, res) => {
     req.session.user = null;
     req.session.message = null;
     req.session.messageType = null;
@@ -25,7 +20,7 @@ router.get('/admin/logout', (req, res) => {
 });
 
 // login form
-router.get('/admin/login', async (req, res) => {
+router.get('/ImUser/login', async (req, res) => {
     const db = req.app.db;
 
     const userCount = await db.users.countDocuments({});
@@ -47,32 +42,6 @@ router.get('/admin/login', async (req, res) => {
         req.session.needsSetup = true;
         res.redirect('/admin/setup');
     }
-});
-
-// login the user and check the password
-router.post('/admin/login_action', async (req, res) => {
-    const db = req.app.db;
-
-    const user = await db.users.findOne({ userEmail: common.mongoSanitize(req.body.email) });
-    if(!user || user === null){
-        res.status(400).json({ message: 'U¿ytkownik o podanym mailu nie istnieje' });
-        return;
-    }
-
-    // we have a user under that email so we compare the password
-    bcrypt.compare(req.body.password, user.userPassword)
-    .then((result) => {
-        if(result){
-            req.session.user = req.body.email;
-            req.session.usersName = user.usersName;
-            req.session.userId = user._id.toString();
-            req.session.isAdmin = user.isAdmin;
-            res.status(200).json({ message: 'Zalogowano pomyœlnie' });
-            return;
-        }
-        // password is not correct
-        res.status(400).json({ message: 'Odmowa dostêpu, sprawdŸ has³o' });
-    });
 });
 
 // setup form is shown when there are no users setup in the DB
