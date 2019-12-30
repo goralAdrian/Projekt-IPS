@@ -36,14 +36,8 @@
                                 <div class="form-group">
                                     <div class="col-lg-5 col l5 no-pad-left">
                                         <div class="input-group">
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-sm btn-primary btn-qty-minus" type="button">-</button>
-                                            </span>
                                             <input type="number" class="form-control cart-product-quantity input-sm text-center" data-id="{{this.productId}}" id="{{@key}}"
                                                 maxlength="2" value="{{this.quantity}}">
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-sm btn-primary btn-qty-add" type="button">+</button>
-                                            </span>
                                         </div>
                                     </div>
                                     <span class="pull-right">
@@ -83,7 +77,7 @@
                     {{else}}
                     <div class="row">
                         <div class="cart-contents-shipping col-md-12 no-pad-right">
-                            Koszyk pusty
+                            Koszyk jest pusty
                         </div>
                     </div>
                     {{/if}}
@@ -100,7 +94,7 @@
                 {{#ifCond @root.page '==' 'checkout'}}
                 <a href="/pay" class="btn btn-default">{{ @root.__ "Zapłać teraz" }}</a>
                 {{else}}
-                <a href="/checkout" class="btn btn-default">Checkout</a>
+                <a href="/checkout" class="btn btn-default">Kliknij by przejść do zapłaty</a>
                 {{/ifCond}}
             </div>
             {{/ifCond}} {{/if}}
