@@ -1,8 +1,8 @@
 <div class="col-xl-8 col-xl-offset-2 col-xs-12">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page"><a href="/checkout">Checkout</a></li>
+            <li class="breadcrumb-item"><a href="/">Strona główna</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><a href="/checkout">Powrót do sprawdzenia zamówienia</a></li>
             <li class="breadcrumb-item active" aria-current="page">{{ @root.__ "Pay now" }}</li>
         </ol>
     </nav>
@@ -17,16 +17,16 @@
                 <div class="panel-body customer-details-login">
                     <p>{{ @root.__ "Existing customer" }}</p>
                     <div class="form-group">
-                        <input type="email" class="form-control" id="customerLoginEmail" name="loginEmail" minlength="5" placeholder="Email address" required>
+                        <input type="email" class="form-control" id="customerLoginEmail" name="loginEmail" minlength="5" placeholder="Podaj adres e - mail" required>
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" id="customerLoginPassword" name="loginPassword" minlength="5" placeholder="Password" required>
+                        <input type="password" class="form-control" id="customerLoginPassword" name="loginPassword" minlength="5" placeholder="Podaj hasło" required>
                     </div>
                     <div class="form-group">
                         <a href="/customer/forgotten" class="btn btn-default pull-left">{{ @root.__ "Forgotten" }}</a>
                     </div>
                     <div class="form-group">
-                        <button id="customerLogin" class="btn btn-success pull-right" type="submit">Login</button>
+                        <button id="customerLogin" class="btn btn-success pull-right" type="submit">Loguj</button>
                     </div>
                 </div>
                 {{/unless}}
