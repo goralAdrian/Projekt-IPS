@@ -79,7 +79,7 @@
         },
         "currencySymbol": {
             "type": "string",
-            "default": "£"
+            "default": "PLN"
         },
         "paymentGateway": {
             "type": "string",
