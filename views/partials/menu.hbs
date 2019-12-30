@@ -1,15 +1,17 @@
 <div class="col-lg-3">
     <h2>&nbsp;</h2>
     <ul class="list-group">
-        <li class="list-group-item"><strong>Książki</strong></li>
+        <li class="list-group-item"><strong>Zbiór książek</strong></li>
+		
         {{#ifCond session.isAdmin '===' true}}
         <li class="list-group-item"><i class="fa fa-plus-square-o fa-icon" aria-hidden="true"></i> &nbsp; <a href="/admin/product/new">{{ @root.__ "New" }}</a></li>
         {{/ifCond}}
         <li class="list-group-item"><i class="fa fa-list fa-icon" aria-hidden="true"></i> &nbsp; <a href="/admin/products">{{ @root.__ "List" }}</a></li>
-        <li class="list-group-item"><strong>Zamówienia</strong></li>
+        
+		<li class="list-group-item"><strong>Spis zamówień</strong></li>
+		
         <li class="list-group-item"><i class="fa fa-cube fa-icon" aria-hidden="true"></i> &nbsp; <a href="/admin/orders">{{ @root.__ "List" }}</a></li>
-        <li class="list-group-item"><strong>Klienci</strong></li>
-        <li class="list-group-item"><i class="fa fa-users fa-icon" aria-hidden="true"></i> &nbsp; <a href="/admin/customers">{{ @root.__ "List" }}</a></li>
+		
         <li class="list-group-item"><strong>Użytkownicy</strong></li>
         {{#ifCond session.isAdmin '===' true}}
         <li class="list-group-item"><i class="fa fa-user-plus fa-icon" aria-hidden="true"></i> &nbsp; <a href="/admin/user/new">{{ @root.__ "New" }}</a></li>
@@ -18,7 +20,6 @@
         <li class="list-group-item"><i class="fa fa-user-circle-o fa-icon" aria-hidden="true"></i> &nbsp; <a href="/admin/user/edit/{{session.userId}}">Moje konto</a></li>
         <li class="list-group-item"><strong>{{ @root.__ "Settings" }}</strong></li>
         <li class="list-group-item"><i class="fa fa-cog fa-icon" aria-hidden="true"></i> &nbsp; <a href="/admin/settings">{{ @root.__ "General settings" }}</a></li>
-        <li class="list-group-item"><i class="fa fa-bars fa-icon" aria-hidden="true"></i> &nbsp; <a href="/admin/settings/menu">Menu</a></li>
         <li class="list-group-item"><i class="fa fa-file-o fa-icon" aria-hidden="true"></i> &nbsp; <a href="/admin/settings/pages">{{ @root.__ "Static pages" }}</a></li>
     </ul>
 </div>
