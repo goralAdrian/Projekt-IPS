@@ -59,7 +59,7 @@
                         {{#ifCond @root.session.shippingCostApplied '===' true}}
                         <div class="text-right">
                             {{ @root.__ "Shipping" }}
-                            <strong>{{currencySymbol config.currencySymbol}}{{formatAmount @root.config.flatShipping}}</strong>
+                            <strong>PLN {{formatAmount @root.config.flatShipping}}</strong>
                         </div>
                         {{else}}
                         <div class="text-right">

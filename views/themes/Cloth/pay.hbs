@@ -36,23 +36,7 @@
                         <button id="customerLogout" class="btn btn-sm btn-success pull-right">{{ @root.__ "Change customer" }}</button>
                     </div>
                     {{/if}}
-                    <form id="shipping-form" class="shipping-form" action="/{{config.paymentGateway}}/checkout_action{{@root.paymentType}}" method="post" role="form" data-toggle="validator" novalidate="false">
-                        {{> partials/payments/shipping-form}}
-                        {{#if session.customer}}
-                        {{#ifCond config.paymentGateway '==' 'paypal'}}
-                            {{> partials/payments/paypal}}
-                        {{/ifCond}}
-                        {{/if}}
-                        {{#unless session.customer}}
-                        <div class="col-xs-12 col-md-12">
-                            <p class="text-muted">{{ @root.__ "Enter a password to create an account for next time" }}</p>
-                            <div class="form-group">
-                                <input type="password" class="form-control customerDetails" id="newCustomerPassword" name="newCustomerPassword" placeholder="Password" required>
-                            </div>
-                            <a id="createCustomerAccount" class="btn btn-success pull-right">{{ @root.__ "Create account" }}</a>
-                        </div>
-                        {{/unless}}
-                    </form>
+                    
                     {{#if session.customer}}
                     {{#ifCond config.paymentGateway '==' 'stripe'}}
                         {{> partials/payments/stripe}}

@@ -47,7 +47,7 @@
                             </p>
                         </div>
                         <div class="col-xs-12 col-lg-4 col s12 l4 cart-item-row text-right no-pad-right">
-                            <strong>{{currencySymbol ../config.currencySymbol}}{{formatAmount this.totalItemPrice}}</strong>
+                            <strong>PLN {{formatAmount this.totalItemPrice}}</strong>
                         </div>
                     </div>
                     {{/each}}
@@ -58,7 +58,7 @@
                         <div class="cart-contents-shipping col-md-12 col m12 no-pad-right">
                             {{#ifCond @root.session.shippingCostApplied '===' true}}
                             <div class="text-right">
-                                <strong>{{currencySymbol config.currencySymbol}}{{formatAmount config.flatShipping}}</strong>
+                                <strong>PLN {{formatAmount config.flatShipping}}</strong>
                                 {{ @root.__ "Shipping" }}
                                 <strong>{{currencySymbol @root.config.currencySymbol}}{{formatAmount @root.config.flatShipping}}</strong>
                             </div>
