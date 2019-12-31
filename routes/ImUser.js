@@ -45,4 +45,48 @@ router.get('/ImUser/login', async (req, res) => {
 });
 
 
+router.post('/ImUser/register', async (req, res) => {
+    const db = req.app.db;
+
+    const customerObj = {
+        usersName: req.body.usersName,
+        userEmail: req.body.userEmail,
+        isAdmin: req.body.isAdmin,
+        password: bcrypt.hashSync(req.body.password, 10),
+        created: new Date()
+    };
+
+    const schemaResult = validateJson('newCustomer', customerObj);
+    if(!schemaResult.result){
+        res.status(400).json(schemaResult.errors);
+        return;
+    }
+
+    // check for existing customer
+    const customer = await db.customers.findOne({ email: req.body.email });
+    if(customer){
+        res.status(400).json({
+            message: 'Klient z adekwatnym adresem e - mail już istnieje'
+        });
+        return;
+    }
+    // email is ok to be used.
+    try{
+        const newCustomer = await db.customers.insertOne(customerObj);
+        indexCustomers(req.app)
+        .then(() => {
+            // Customer creation successful
+            req.session.customer = newCustomer.insertedId;
+            const customerReturn = newCustomer.ops[0];
+            delete customerReturn.password;
+            res.status(200).json(customerReturn);
+        });
+    }catch(ex){
+        console.error(colors.red('Failed to insert customer: ', ex));
+        res.status(400).json({
+            message: 'Customer creation failed.'
+        });
+    }
+});
+
 module.exports = router;
