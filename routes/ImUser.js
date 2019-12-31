@@ -11,6 +11,11 @@ const mime = require('mime-type/with-db');
 const ObjectId = require('mongodb').ObjectID;
 const router = express.Router();
 
+//user place
+router.get('/ImUser', restrict, (req, res, next) => {
+    res.redirect('/ImUser');
+});
+
 // logout
 router.get('/ImUser/logout', (req, res) => {
     req.session.user = null;
@@ -20,7 +25,7 @@ router.get('/ImUser/logout', (req, res) => {
 });
 
 // login form
-router.get('/ImUser/login', async (req, res) => {
+router.get('/ImUser/login2', async (req, res) => {
     const db = req.app.db;
 
     const userCount = await db.users.countDocuments({});
