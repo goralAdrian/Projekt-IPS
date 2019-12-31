@@ -36,7 +36,7 @@ router.post('/customer/create', async (req, res) => {
     const customer = await db.customers.findOne({ email: req.body.email });
     if(customer){
         res.status(400).json({
-            message: 'A customer already exists with that email address'
+            message: 'Klient z adekwatnym adresem e - mail już istnieje'
         });
         return;
     }
@@ -237,7 +237,7 @@ router.post('/customer/login_action', async (req, res) => {
     // check if customer exists with that email
     if(customer === undefined || customer === null){
         res.status(400).json({
-            message: 'A customer with that email does not exist.'
+            message: 'Klient z podanym e - mailem nie istnieje.'
         });
         return;
     }
@@ -247,7 +247,7 @@ router.post('/customer/login_action', async (req, res) => {
         if(!result){
             // password is not correct
             res.status(400).json({
-                message: 'Access denied. Check password and try again.'
+                message: 'Błąd logowania, sprawdź hasło i spróbuj ponownie.'
             });
             return;
         }
@@ -255,13 +255,13 @@ router.post('/customer/login_action', async (req, res) => {
         // Customer login successful
         req.session.customer = customer;
         res.status(200).json({
-            message: 'Successfully logged in',
+            message: 'Zalogowano pomyślnie',
             customer: customer
         });
     })
     .catch((err) => {
         res.status(400).json({
-            message: 'Access denied. Check password and try again.'
+            message: 'Błąd logowania, sprawdź hasło i spróbuj ponownie.'
         });
     });
 });
@@ -290,7 +290,7 @@ router.post('/customer/forgotten_action', async (req, res) => {
     const customer = await db.customers.findOne({ email: req.body.email });
     // if we have a customer, set a token, expiry and email it
     if(!customer){
-        req.session.message = 'Account does not exist';
+        req.session.message = 'Konto z podanym e - mailem nie istnieje';
         req.session.message_type = 'danger';
         res.redirect('/customer/forgotten');
         return;
@@ -311,11 +311,11 @@ router.post('/customer/forgotten_action', async (req, res) => {
         // send the email with token to the user
         // TODO: Should fix this to properly handle result
         common.sendEmail(mailOpts.to, mailOpts.subject, mailOpts.body);
-        req.session.message = 'An email has been sent to ' + req.body.email + ' with further instructions';
+        req.session.message = 'Wiadomość została e - mail wysłana na adres ' + req.body.email + '. Wewnątrz wiadomości znajdują się przyszłe wskazówki';
         req.session.message_type = 'success';
         res.redirect('/customer/forgotten');
     }catch(ex){
-        req.session.message = 'Account does not exist';
+        req.session.message = 'Konto z podanym e - mailem nie istnieje';
         req.session.message_type = 'danger';
         res.redirect('/customer/forgotten');
     }
@@ -328,7 +328,7 @@ router.get('/customer/reset/:token', async (req, res) => {
     // Find the customer using the token
     const customer = await db.customers.findOne({ resetToken: req.params.token, resetTokenExpiry: { $gt: Date.now() } });
     if(!customer){
-        req.session.message = 'Password reset token is invalid or has expired';
+        req.session.message = 'Token resetujący hasło jest nieprawidłowy, sprawdź wiadomość ponownie oraz zawarty w niej token.';
         req.session.message_type = 'danger';
         res.redirect('/forgot');
         return;
@@ -354,7 +354,7 @@ router.post('/customer/reset/:token', async (req, res) => {
     // get the customer
     const customer = await db.customers.findOne({ resetToken: req.params.token, resetTokenExpiry: { $gt: Date.now() } });
     if(!customer){
-        req.session.message = 'Password reset token is invalid or has expired';
+        req.session.message = 'Token resetujący hasło jest nieprawidłowy, sprawdź wiadomość ponownie oraz zawarty w niej token.';
         req.session.message_type = 'danger';
         return res.redirect('/forgot');
     }
@@ -365,18 +365,18 @@ router.post('/customer/reset/:token', async (req, res) => {
         await db.customers.updateOne({ email: customer.email }, { $set: { password: newPassword, resetToken: undefined, resetTokenExpiry: undefined } }, { multi: false });
         const mailOpts = {
             to: customer.email,
-            subject: 'Password successfully reset',
-            body: 'This is a confirmation that the password for your account ' + customer.email + ' has just been changed successfully.\n'
+            subject: 'Hasło zmieniono poprawnie',
+            body: 'Jest to po prostu potwierdzenie, iż hasło do konta o e - mailu ' + customer.email + ' zostało zmienione pomyślnie.\n'
         };
 
         // TODO: Should fix this to properly handle result
         common.sendEmail(mailOpts.to, mailOpts.subject, mailOpts.body);
-        req.session.message = 'Password successfully updated';
+        req.session.message = 'Hasło zmieniono pomyślnie';
         req.session.message_type = 'success';
         return res.redirect('/pay');
     }catch(ex){
-        console.log('Unable to reset password', ex);
-        req.session.message = 'Unable to reset password';
+        console.log('Nie udało się zmienić hasła', ex);
+        req.session.message = 'Nie udało się zmienić hasła';
         req.session.message_type = 'danger';
         return res.redirect('/forgot');
     }

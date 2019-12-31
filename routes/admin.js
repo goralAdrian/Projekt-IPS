@@ -162,10 +162,10 @@ router.post('/admin/createApiKey', restrict, checkAccess, async (req, res) => {
     });
 
     if(result.value && result.value.apiKey){
-        res.status(200).json({ message: 'API Key generated', apiKey: result.value.apiKey });
+        res.status(200).json({ message: 'Wygenerowany klucz API:', apiKey: result.value.apiKey });
         return;
     }
-    res.status(400).json({ message: 'Failed to generate API Key' });
+    res.status(400).json({ message: 'Nie uda³o siê wygenerowaæ klucza API' });
 });
 
 // settings update
