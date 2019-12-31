@@ -96,7 +96,7 @@
                     {{else}}
                         {{#isNull @root.config.cartLogo}}
                             {{#isNull @root.config.cartTitle}}
-                                <a class="navbar-brand" href="/">expressCart</a>
+                                <a class="navbar-brand" href="/">Księgarnia</a>
                             {{else}}
                                 <a class="navbar-brand" href="/">{{@root.config.cartTitle}}</a>
                             {{/isNull}}
@@ -129,7 +129,7 @@
                         {{/ifCond}}
                         {{/unless}}
                         {{#if @root.session.user}}
-							<li><a href="/admin/logout"><i class="fa fa-sign-out" aria-hidden="true"> </i>Logout</a></li>
+							<li><a href="/admin/logout"><i class="fa fa-sign-out" aria-hidden="true"> </i>Wyloguj się</a></li>
 						{{/if}}
 					</ul>
 				</div>
@@ -165,7 +165,7 @@
             <footer class="footer">
                 <div class="container-fluid">
                     {{#isNull @root.config.footerHtml}}
-                        <h4 class="text-center">Powered by expressCart</h4>
+                        <h4 class="text-center">Website make Sully!</h4>
                     {{else}}
                         {{{@root.config.footerHtml}}}
                     {{/isNull}}
