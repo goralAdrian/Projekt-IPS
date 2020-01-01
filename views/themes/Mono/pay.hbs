@@ -11,16 +11,16 @@
                     {{#unless session.customer}}
                     <p>{{ @root.__ "Existing customer" }}</p>
                     <div class="input-field col s12">
-                        <input type="email" id="customerLoginEmail" name="loginEmail" minlength="5" placeholder="Email address" required>
+                        <input type="email" id="customerLoginEmail" name="loginEmail" minlength="5" placeholder="Wpisz adres e - mail" required>
                     </div>
                     <div class="input-field col s12">
-                        <input type="password" class="form-control" id="customerLoginPassword" name="loginPassword" minlength="5" placeholder="Password" required>
+                        <input type="password" class="form-control" id="customerLoginPassword" name="loginPassword" minlength="5" placeholder="Wpisz hasło" required>
                     </div>
                     <div class="input-field col s12 m6">
                         <a href="/customer/forgotten" class="btn waves-effect waves-light black pull-left">{{ @root.__ "Forgotten" }}</a>
                     </div>
                     <div class="input-field col s12 m6">
-                        <button id="customerLogin" class="btn waves-effect waves-light black pull-right" type="submit">Login</button>
+                        <button id="customerLogin" class="btn waves-effect waves-light black pull-right" type="submit">Loguj</button>
                     </div>
                     {{/unless}}
                     {{#if session.customer}}
