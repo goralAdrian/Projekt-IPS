@@ -2,11 +2,11 @@
     "properties": {
         "cartTitle": {
             "type": "string",
-            "default": "expressCart"
+            "default": "Księgarnia z największą liczbą książek w ofercie"
         },
         "cartDescription": {
             "type": "string",
-            "default": "This is my expressCart"
+            "default": "Księgarnia z największą liczbą książek w ofercie"
         },
         "cartLogo": {
             "type": "string"
