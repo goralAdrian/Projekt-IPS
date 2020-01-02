@@ -1,9 +1,12 @@
 {{> partials/menu}}
 <div class="col-lg-9">
     <div class="col-lg-12">
+	{{#ifCond session.isAdmin '===' true}}
         <h2>Zamówienia</h2>
+		{{/ifCond}}
     </div>
     <div class="col-lg-12 search_bar">
+	{{#ifCond session.isAdmin '===' true}}
         <div class="input-group">
             <input type="text" name="order_filter" id="order_filter" class="form-control input-lg" placeholder="Filter orders">
             <span class="input-group-btn">
@@ -31,9 +34,11 @@
                 </div>
             </div>
         </div>
+	{{/ifCond}}
     </div>
 
     <div class="col-lg-12 top-pad-10">
+	{{#ifCond session.isAdmin '===' true}}
         <ul class="list-group">
             <li class="list-group-item">
                 {{#if searchTerm}}
@@ -63,4 +68,5 @@
             {{/if}}
         </ul>
     </div>
+	{{/ifCond}}
 </div>
