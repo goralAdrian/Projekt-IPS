@@ -64,6 +64,7 @@ const stripe = require('./routes/payments/pay');
 const authorizenet = require('./routes/payments/authorizenet');
 const adyen = require('./routes/payments/pay');
 const ImUser = require('./routes/ImUser');
+const payNow = require('./routes/payNow');
 
 const app = express();
 
