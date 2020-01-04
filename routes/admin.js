@@ -86,7 +86,7 @@ router.get('/admin/setup', async (req, res) => {
     if(userCount === 0){
         req.session.needsSetup = true;
         res.render('setup', {
-            title: 'Setup',
+            title: 'Inicjacja konta administratora',
             config: req.app.config,
             helpers: req.handlebars.helpers,
             message: common.clearSessionValue(req.session, 'message'),
@@ -134,7 +134,7 @@ router.post('/admin/setup_action', async (req, res) => {
 // settings
 router.get('/admin/settings', restrict, (req, res) => {
     res.render('settings', {
-        title: 'Ustawienia koszyka',
+        title: 'Ustawienia ksiegarni',
         session: req.session,
         admin: true,
         themes: common.getThemes(),
@@ -200,7 +200,7 @@ router.get('/admin/settings/pages', restrict, async (req, res) => {
     const pages = await db.pages.find({}).toArray();
 
     res.render('settings_pages', {
-        title: 'Strona',
+        title: 'Strony statyczne',
         pages: pages,
         session: req.session,
         admin: true,

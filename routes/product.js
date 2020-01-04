@@ -14,7 +14,7 @@ router.get('/admin/products', restrict, async (req, res, next) => {
     // get the top results
     const topResults = await db.products.find({}).sort({ productAddedDate: -1 }).limit(10).toArray();
     res.render('products', {
-        title: 'Koszyk',
+        title: 'Zbior ksiazek',
         top_results: topResults,
         session: req.session,
         admin: true,
