@@ -16,18 +16,20 @@
                 {{#unless session.customer}}
                 <div class="panel-body customer-details-login">
                     <p>{{ @root.__ "Existing customer" }}</p>
-                    <div class="form-group">
-                        <input type="email" class="form-control" id="customerLoginEmail" name="loginEmail" minlength="5" placeholder="Podaj adres e - mail" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="password" class="form-control" id="customerLoginPassword" name="loginPassword" minlength="5" placeholder="Podaj hasło" required>
-                    </div>
-                    <div class="form-group">
-                        <a href="/customer/forgotten" class="btn btn-default pull-left">{{ @root.__ "Forgotten" }}</a>
-                    </div>
-                    <div class="form-group">
-                        <a href="/payNow" class="btn btn-default pull-right">Loguj się</a>
-                    </div>
+					{{#if @root.session.user}}
+						<div class="form-group">
+							<input type="email" class="form-control" id="customerLoginEmail" name="loginEmail" minlength="5" placeholder="Podaj adres e - mail" required>
+						</div>
+						<div class="form-group">
+							<input type="password" class="form-control" id="customerLoginPassword" name="loginPassword" minlength="5" placeholder="Podaj hasło" required>
+						</div>
+						<div class="form-group">
+							<a href="/customer/forgotten" class="btn btn-default pull-left">{{ @root.__ "Forgotten" }}</a>
+						</div>
+						<div class="form-group">
+							<a href="/payNow" class="btn btn-default pull-right">Loguj się</a>
+						</div>
+					{{/if}}
                 </div>
                 {{/unless}}
                 <div class="panel-body customer-details">
