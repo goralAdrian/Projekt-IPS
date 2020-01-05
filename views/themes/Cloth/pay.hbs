@@ -20,16 +20,7 @@
 					<a href="/payNow" class="btn btn-default pull-right">Zaakceptuj transakcję</a>
 					{{else}}
 						<div class="form-group">
-							<input type="email" class="form-control" id="customerLoginEmail" name="loginEmail" minlength="5" placeholder="Podaj adres e - mail" required>
-						</div>
-						<div class="form-group">
-							<input type="password" class="form-control" id="customerLoginPassword" name="loginPassword" minlength="5" placeholder="Podaj hasło" required>
-						</div>
-						<div class="form-group">
-							<a href="/customer/forgotten" class="btn btn-default pull-left">{{ @root.__ "Forgotten" }}</a>
-						</div>
-						<div class="form-group">
-							<a href="/payNow" class="btn btn-default pull-right">Loguj się</a>
+							<a href="/admin/login" class="btn btn-default pull-right">Loguj się</a>
 						</div>
 					{{/if}}
                 </div>
