@@ -8,11 +8,11 @@ router.get('/checkout_cancel', (req, res, next) => {
     res.redirect('/checkout');
 });
 
-router.get('/checkout_return', (req, res, next) => {
+router.get('/payNow', (req, res, next) => {
 	
 });
 
-// The homepage of the site
+
 router.post('/checkout_action', (req, res, next) => {
 	
 });
