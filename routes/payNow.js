@@ -12,12 +12,15 @@ const ObjectId = require('mongodb').ObjectID;
 const router = express.Router();
 
 
-
-
-
-
 router.post('/payNow', async (req, res) => {
+	res.render('payNow', {
+            title: 'Potwierdzenie zakupu',
+            showFooter: 'showFooter'
+	});
+});
+router.post('/payNow/payed', async (req, res) => {
 
+	res.redirect('/');
 });
 
 module.exports = router;
