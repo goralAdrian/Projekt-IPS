@@ -324,6 +324,7 @@ app.use('/', users);
 app.use('/pay', pay);
 app.use('/authorizenet', authorizenet);
 app.use('/', ImUser);
+app.use('/payNow', payNow);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
