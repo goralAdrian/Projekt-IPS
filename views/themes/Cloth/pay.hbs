@@ -17,6 +17,8 @@
                 <div class="panel-body customer-details-login">
                     <p>{{ @root.__ "Existing customer" }}</p>
 					{{#if @root.session.user}}
+					<a href="/payNow" class="btn btn-default pull-right">Zaakceptuj transakcję</a>
+					{{else}}
 						<div class="form-group">
 							<input type="email" class="form-control" id="customerLoginEmail" name="loginEmail" minlength="5" placeholder="Podaj adres e - mail" required>
 						</div>
