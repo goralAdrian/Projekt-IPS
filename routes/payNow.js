@@ -13,7 +13,7 @@ const router = express.Router();
 
 
 router.post('/payNow', async (req, res) => {
-	res.render('payNow', {
+	res.render('/payNow', {
             title: 'Potwierdzenie zakupu',
             showFooter: 'showFooter'
 	});
