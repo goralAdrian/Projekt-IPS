@@ -63,7 +63,7 @@ const pay = require('./routes/payments/pay');
 const stripe = require('./routes/payments/pay');
 const authorizenet = require('./routes/payments/authorizenet');
 const adyen = require('./routes/payments/pay');
-const ImUser = require('./routes/ImUser');
+const imUser = require('./routes/imUser');
 const payNow = require('./routes/payNow');
 
 const app = express();
@@ -323,7 +323,7 @@ app.use('/', admin);
 app.use('/', users);
 app.use('/pay', pay);
 app.use('/authorizenet', authorizenet);
-app.use('/', ImUser);
+app.use('/imUser', imUser);
 app.use('/payNow', payNow);
 
 // catch 404 and forward to error handler
