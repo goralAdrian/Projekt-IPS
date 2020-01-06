@@ -27,8 +27,15 @@ router.get('/admin/logout', (req, res) => {
 router.get('/admin/register', (req, res) => {
     res.render('register', {
             title: 'Rejestracja',
-			helpers: req.handlebars.helpers,
+            config: req.app.config,
+            helpers: req.handlebars.helpers,
+            message: common.clearSessionValue(req.session, 'message'),
+            messageType: common.clearSessionValue(req.session, 'messageType'),
+            showFooter: 'showFooter'
+			return;
         });
+		
+	res.redirect('/admin/login');
 });
 
 // login form
