@@ -32,7 +32,6 @@ router.get('/admin/register', (req, res) => {
             message: common.clearSessionValue(req.session, 'message'),
             messageType: common.clearSessionValue(req.session, 'messageType'),
             showFooter: 'showFooter'
-			return;
         });
 		
 	res.redirect('/admin/login');
