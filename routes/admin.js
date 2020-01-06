@@ -16,6 +16,18 @@ router.get('/admin', restrict, (req, res, next) => {
     res.redirect('/admin/orders');
 });
 
+router.get('/admin/register', restrict, (req, res, next) => {
+	res.render('register', {
+            title: 'Rejestracja',
+            referringUrl: req.header('Referer'),
+            config: req.app.config,
+            message: common.clearSessionValue(req.session, 'message'),
+            messageType: common.clearSessionValue(req.session, 'messageType'),
+            helpers: req.handlebars.helpers,
+            showFooter: 'showFooter'
+        });
+});
+
 // logout
 router.get('/admin/logout', (req, res) => {
     req.session.user = null;
