@@ -12,8 +12,28 @@ const ObjectId = require('mongodb').ObjectID;
 const router = express.Router();
 
 // Admin section
-router.get('/register', restrict, (req, res, next) => {
-    
+router.get('admin/register', restrict, (req, res, next) => {
+    const db = req.app.db;
+	const doc = {
+        usersName: req.body.usersName,
+        userEmail: req.body.usersEmail,
+        userPassword: bcrypt.hashSync(req.body.userPassword, 10),
+        isAdmin: false,
+        isOwner: false
+    };
+	try{
+            await db.users.insertOne(doc);
+            req.session.message = 'User account inserted';
+            req.session.messageType = 'success';
+            res.redirect('/admin/login');
+            return;
+        }catch(ex){
+            console.error(colors.red('Nie uda³o siê wstawiæ u¿ytkownika: ' + ex));
+            req.session.message = 'Setup failed';
+            req.session.messageType = 'danger';
+            res.redirect('/admin/register');
+            return;
+        }
 });
 
 
@@ -28,6 +48,8 @@ router.post('/admin/setup_action', async (req, res) => {
         userPassword: bcrypt.hashSync(req.body.userPassword, 10),
         isAdmin: true,
         isOwner: true
+		
+		
     };
 
     // check for users
