@@ -14,6 +14,7 @@ router.get('/pay/payNow', (req, res, next) => {
     const db = req.app.db;
     const ordersCount = db.orders.countDocuments({});
 
+	
     user = req.session.user;
     allMoney = req.session.totalCartAmount;
 	cart = req.session.cart;
@@ -30,10 +31,12 @@ router.get('/pay/payNow', (req, res, next) => {
             {
 			"id" : id,
             "orderTotal" : allMoney,
-            "user" : mail,
-            "cart" : cart
+            "user" : user,
+            "cart" : cart,
             }
     )
+	console.log('dodano');
+	res.redirect('/');
 });
 
 
