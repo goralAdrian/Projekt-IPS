@@ -25,12 +25,16 @@ router.get('/admin/logout', (req, res) => {
 });
 
 router.get('/admin/register', (req, res) => {
-    res.render('register', {
-            title: 'Rejestracja',
+	const db = req.app.db;
+	
+	res.render('register', {
+            title: 'Inicjacja konta administratora',
+            config: req.app.config,
+            helpers: req.handlebars.helpers,
+            message: common.clearSessionValue(req.session, 'message'),
+            messageType: common.clearSessionValue(req.session, 'messageType'),
             showFooter: 'showFooter'
         });
-		
-	res.redirect('/admin/login');
 });
 
 // login form
