@@ -25,6 +25,10 @@ router.get('/admin/logout', (req, res) => {
 });
 
 router.get('/admin/register', (req, res) => {
+    
+    console.error('sssssssssssssss')
+    
+    
 	const db = req.app.db;
 	
 	res.render('register', {
@@ -68,7 +72,7 @@ router.post('/admin/login_action', async (req, res) => {
 
     const user = await db.users.findOne({ userEmail: common.mongoSanitize(req.body.email) });
     if(!user || user === null){
-        res.status(400).json({ message: 'U¿ytkownik o podanym mailu nie istnieje' });
+        res.status(400).json({ message: 'Uï¿½ytkownik o podanym mailu nie istnieje' });
         return;
     }
 
@@ -80,11 +84,11 @@ router.post('/admin/login_action', async (req, res) => {
             req.session.usersName = user.usersName;
             req.session.userId = user._id.toString();
             req.session.isAdmin = user.isAdmin;
-            res.status(200).json({ message: 'Zalogowano pomyœlnie' });
+            res.status(200).json({ message: 'Zalogowano pomyï¿½lnie' });
             return;
         }
         // password is not correct
-        res.status(400).json({ message: 'Odmowa dostêpu, sprawdŸ has³o' });
+        res.status(400).json({ message: 'Odmowa dostï¿½pu, sprawdï¿½ hasï¿½o' });
     });
 });
 
@@ -134,7 +138,7 @@ router.post('/admin/setup_action', async (req, res) => {
             res.redirect('/admin/login');
             return;
         }catch(ex){
-            console.error(colors.red('Nie uda³o siê wstawiæ u¿ytkownika: ' + ex));
+            console.error(colors.red('Nie udaï¿½o siï¿½ wstawiï¿½ uï¿½ytkownika: ' + ex));
             req.session.message = 'Setup failed';
             req.session.messageType = 'danger';
             res.redirect('/admin/setup');
@@ -178,7 +182,7 @@ router.post('/admin/createApiKey', restrict, checkAccess, async (req, res) => {
         res.status(200).json({ message: 'Wygenerowany klucz API:', apiKey: result.value.apiKey });
         return;
     }
-    res.status(400).json({ message: 'Nie uda³o siê wygenerowaæ klucza API' });
+    res.status(400).json({ message: 'Nie udaï¿½o siï¿½ wygenerowaï¿½ klucza API' });
 });
 
 // settings update
@@ -189,7 +193,7 @@ router.post('/admin/settings/update', restrict, checkAccess, (req, res) => {
         res.status(200).json({ message: 'Ustawienia zaktualizowano z sukcesem' });
         return;
     }
-    res.status(400).json({ message: 'Odmowa dostêpu' });
+    res.status(400).json({ message: 'Odmowa dostï¿½pu' });
 });
 
 // settings menu
@@ -249,9 +253,9 @@ router.get('/admin/settings/pages/edit/:page', restrict, checkAccess, async (req
     const menu = common.sortMenu(await common.getMenu(db));
     if(!page){
         res.status(404).render('error', {
-            title: 'B³¹d 404, nie znaleziono strony',
+            title: 'Bï¿½ï¿½d 404, nie znaleziono strony',
             config: req.app.config,
-            message: 'B³¹d 404, nie znaleziono strony',
+            message: 'Bï¿½ï¿½d 404, nie znaleziono strony',
             helpers: req.handlebars.helpers,
             showFooter: 'showFooter',
             menu
@@ -294,18 +298,18 @@ router.post('/admin/settings/page', restrict, checkAccess, async (req, res) => {
 
         try{
             const updatedPage = await db.pages.findOneAndUpdate({ _id: common.getId(req.body.pageId) }, { $set: doc }, { returnOriginal: false });
-            res.status(200).json({ message: 'Stronê zaktualizowano z sukcesem', pageId: req.body.pageId, page: updatedPage.value });
+            res.status(200).json({ message: 'Stronï¿½ zaktualizowano z sukcesem', pageId: req.body.pageId, page: updatedPage.value });
         }catch(ex){
-            res.status(400).json({ message: 'Wyst¹pi³ b³¹d, proszê spróbowaæ ponownie' });
+            res.status(400).json({ message: 'Wystï¿½piï¿½ bï¿½ï¿½d, proszï¿½ sprï¿½bowaï¿½ ponownie' });
         }
     }else{
         // insert page
         try{
             const newDoc = await db.pages.insertOne(doc);
-            res.status(200).json({ message: 'Utworzono now¹ stronê pomyœlnie', pageId: newDoc.insertedId });
+            res.status(200).json({ message: 'Utworzono nowï¿½ stronï¿½ pomyï¿½lnie', pageId: newDoc.insertedId });
             return;
         }catch(ex){
-            res.status(400).json({ message: 'Wyst¹pi³ b³¹d, proszê spróbowaæ ponownie' });
+            res.status(400).json({ message: 'Wystï¿½piï¿½ bï¿½ï¿½d, proszï¿½ sprï¿½bowaï¿½ ponownie' });
         }
     }
 });
@@ -322,10 +326,10 @@ router.post('/admin/settings/page/delete', restrict, checkAccess, async (req, re
 
     try{
         await db.pages.deleteOne({ _id: common.getId(req.body.pageId) }, {});
-        res.status(200).json({ message: 'Stronê usuniêto pomyœlnie' });
+        res.status(200).json({ message: 'Stronï¿½ usuniï¿½to pomyï¿½lnie' });
         return;
     }catch(ex){
-        res.status(400).json({ message: 'WYst¹pi³ b³¹d podczas usuwania strony, proszê spróbowaæ ponownie' });
+        res.status(400).json({ message: 'WYstï¿½piï¿½ bï¿½ï¿½d podczas usuwania strony, proszï¿½ sprï¿½bowaï¿½ ponownie' });
     }
 });
 
@@ -333,37 +337,37 @@ router.post('/admin/settings/page/delete', restrict, checkAccess, async (req, re
 router.post('/admin/settings/menu/new', restrict, checkAccess, (req, res) => {
     const result = common.newMenu(req);
     if(result === false){
-        res.status(400).json({ message: 'B³¹d podczas tworzenia menu' });
+        res.status(400).json({ message: 'Bï¿½ï¿½d podczas tworzenia menu' });
         return;
     }
-    res.status(200).json({ message: 'Menu zosta³o utworzone poprawnie' });
+    res.status(200).json({ message: 'Menu zostaï¿½o utworzone poprawnie' });
 });
 
 // update existing menu item
 router.post('/admin/settings/menu/update', restrict, checkAccess, (req, res) => {
     const result = common.updateMenu(req);
     if(result === false){
-        res.status(400).json({ message: 'B³¹d podczas aktualizacji menu' });
+        res.status(400).json({ message: 'Bï¿½ï¿½d podczas aktualizacji menu' });
         return;
     }
-    res.status(200).json({ message: 'Menu zosta³o zaktualizowane pomyœlnie.' });
+    res.status(200).json({ message: 'Menu zostaï¿½o zaktualizowane pomyï¿½lnie.' });
 });
 
 // delete menu item
 router.post('/admin/settings/menu/delete', restrict, checkAccess, (req, res) => {
     const result = common.deleteMenu(req, req.body.menuId);
     if(result === false){
-        res.status(400).json({ message: 'B³¹d podczas usuwania menu' });
+        res.status(400).json({ message: 'Bï¿½ï¿½d podczas usuwania menu' });
         return;
     }
-    res.status(200).json({ message: 'Menu zosta³o usuniête pomyœlnie.' });
+    res.status(200).json({ message: 'Menu zostaï¿½o usuniï¿½te pomyï¿½lnie.' });
 });
 
 // We call this via a Ajax call to save the order from the sortable list
 router.post('/admin/settings/menu/save_order', restrict, checkAccess, (req, res) => {
     const result = common.orderMenu(req, res);
     if(result === false){
-        res.status(400).json({ message: 'B³¹d podczas zmiany kolejnoœci menu' });
+        res.status(400).json({ message: 'Bï¿½ï¿½d podczas zmiany kolejnoï¿½ci menu' });
         return;
     }
     res.status(200);
@@ -384,10 +388,10 @@ router.post('/admin/api/validate_permalink', async (req, res) => {
 
     const products = await db.products.countDocuments(query);
     if(products && products > 0){
-        res.status(400).json({ message: 'Permalink ju¿ istnieje' });
+        res.status(400).json({ message: 'Permalink juï¿½ istnieje' });
         return;
     }
-    res.status(200).json({ message: 'Walidacja permalinku zosta³a ukoñczona pomyœlnie' });
+    res.status(200).json({ message: 'Walidacja permalinku zostaï¿½a ukoï¿½czona pomyï¿½lnie' });
 });
 
 // upload the file
@@ -407,7 +411,7 @@ router.post('/admin/file/upload', restrict, checkAccess, upload.single('uploadFi
             fs.unlinkSync(file.path);
 
             // Return error
-            res.status(400).json({ message: 'Plik ma z³y format lub jest za du¿y. Proszê spróbowaæ ponownie.' });
+            res.status(400).json({ message: 'Plik ma zï¿½y format lub jest za duï¿½y. Proszï¿½ sprï¿½bowaï¿½ ponownie.' });
             return;
         }
 
@@ -418,7 +422,7 @@ router.post('/admin/file/upload', restrict, checkAccess, upload.single('uploadFi
             fs.unlinkSync(file.path);
 
             // Return error
-            res.status(400).json({ message: 'B³¹d podczas ³adowania pliku na serwer. Proszê spróbowaæ ponownie.' });
+            res.status(400).json({ message: 'Bï¿½ï¿½d podczas ï¿½adowania pliku na serwer. Proszï¿½ sprï¿½bowaï¿½ ponownie.' });
             return;
         }
 
@@ -445,19 +449,19 @@ router.post('/admin/file/upload', restrict, checkAccess, upload.single('uploadFi
             await db.products.updateOne({ _id: common.getId(req.body.productId) }, { $set: { productImage: imagePath } }, { multi: false });
         }
          // Return success message
-        res.status(200).json({ message: 'Plik zosta³ wrzucony na stronê z sukcesem' });
+        res.status(200).json({ message: 'Plik zostaï¿½ wrzucony na stronï¿½ z sukcesem' });
         return;
     }
     // Return error
-    res.status(400).json({ message: 'B³¹d podczas wrzucenia pliku na stronê. Proszê spróbowaæ ponownie.' });
+    res.status(400).json({ message: 'Bï¿½ï¿½d podczas wrzucenia pliku na stronï¿½. Proszï¿½ sprï¿½bowaï¿½ ponownie.' });
 });
 
 // delete a file via ajax request
 router.post('/admin/testEmail', restrict, (req, res) => {
     const config = req.app.config;
     // TODO: Should fix this to properly handle result
-    common.sendEmail(config.emailAddress, 'Test adresu e-mail', 'Ustawienia Twojego adresu e-mail s¹ poprawne');
-    res.status(200).json({ message: 'Wys³ano test e-mail' });
+    common.sendEmail(config.emailAddress, 'Test adresu e-mail', 'Ustawienia Twojego adresu e-mail sï¿½ poprawne');
+    res.status(200).json({ message: 'Wysï¿½ano test e-mail' });
 });
 
 module.exports = router;

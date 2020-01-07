@@ -36,11 +36,11 @@ router.get('/admin/user/edit/:id', restrict, async (req, res) => {
     // Check user is found
     if(!user){
         if(req.apiAuthenticated){
-            res.status(400).json({ message: 'Nie znaleziono u¿ytkownika' });
+            res.status(400).json({ message: 'Nie znaleziono uï¿½ytkownika' });
             return;
         }
 
-        req.session.message = 'Nie znaleziono u¿ytkownika';
+        req.session.message = 'Nie znaleziono uï¿½ytkownika';
         req.session.messageType = 'danger';
         res.redirect('/admin/users');
         return;
@@ -50,18 +50,18 @@ router.get('/admin/user/edit/:id', restrict, async (req, res) => {
     // an admin we render an access denied message
     if(user.userEmail !== req.session.user && req.session.isAdmin === false){
         if(req.apiAuthenticated){
-            res.status(400).json({ message: 'Odmowa dostêpu' });
+            res.status(400).json({ message: 'Odmowa dostï¿½pu' });
             return;
         }
 
-        req.session.message = 'Odmowa dostêpu';
+        req.session.message = 'Odmowa dostï¿½pu';
         req.session.messageType = 'danger';
         res.redirect('/admin/users');
         return;
     }
 
     res.render('user_edit', {
-        title: 'Edycja konta u¿ytkownika',
+        title: 'Edycja konta uï¿½ytkownika',
         user: user,
         admin: true,
         session: req.session,
@@ -75,8 +75,8 @@ router.get('/admin/user/edit/:id', restrict, async (req, res) => {
 // users new
 router.get('/admin/user/new', restrict, (req, res) => {
     res.render('user_new', {
-        title: 'Nowe konto u¿ytkownika',
-        admin: true,
+        title: 'Nowe konto uï¿½ytkownika',
+        admin: false,
         session: req.session,
         helpers: req.handlebars.helpers,
         message: common.clearSessionValue(req.session, 'message'),
@@ -92,11 +92,11 @@ router.get('/admin/user/delete/:id', restrict, async (req, res) => {
     // userId
     if(req.session.isAdmin !== true){
         if(req.apiAuthenticated){
-            res.status(400).json({ message: 'Odmowa dostêpu' });
+            res.status(400).json({ message: 'Odmowa dostï¿½pu' });
             return;
         }
 
-        req.session.message = 'Odmowa dostêpu.';
+        req.session.message = 'Odmowa dostï¿½pu.';
         req.session.messageType = 'danger';
         res.redirect('/admin/users');
         return;
@@ -105,11 +105,11 @@ router.get('/admin/user/delete/:id', restrict, async (req, res) => {
     // Cannot delete your own account
     if(req.session.userId === req.params.id){
         if(req.apiAuthenticated){
-            res.status(400).json({ message: 'Nie mo¿esz usun¹æ swojego konta' });
+            res.status(400).json({ message: 'Nie moï¿½esz usunï¿½ï¿½ swojego konta' });
             return;
         }
 
-        req.session.message = 'Nie mo¿esz usun¹æ swojego konta.';
+        req.session.message = 'Nie moï¿½esz usunï¿½ï¿½ swojego konta.';
         req.session.messageType = 'danger';
         res.redirect('/admin/users');
         return;
@@ -120,11 +120,11 @@ router.get('/admin/user/delete/:id', restrict, async (req, res) => {
     // If user is not found
     if(!user){
         if(req.apiAuthenticated){
-            res.status(400).json({ message: 'Nie odnaleziono u¿ytkownika.' });
+            res.status(400).json({ message: 'Nie odnaleziono uï¿½ytkownika.' });
             return;
         }
 
-        req.session.message = 'Nie odnaleziono u¿ytkownika.';
+        req.session.message = 'Nie odnaleziono uï¿½ytkownika.';
         req.session.messageType = 'danger';
         res.redirect('/admin/users');
         return;
@@ -133,11 +133,11 @@ router.get('/admin/user/delete/:id', restrict, async (req, res) => {
     // Cannot delete the original user/owner
     if(user.isOwner){
         if(req.apiAuthenticated){
-            res.status(400).json({ message: 'Odmowa dostêpu.' });
+            res.status(400).json({ message: 'Odmowa dostï¿½pu.' });
             return;
         }
 
-        req.session.message = 'Odmowa dostêpu.';
+        req.session.message = 'Odmowa dostï¿½pu.';
         req.session.messageType = 'danger';
         res.redirect('/admin/users');
         return;
@@ -146,10 +146,10 @@ router.get('/admin/user/delete/:id', restrict, async (req, res) => {
     try{
         await db.users.deleteOne({ _id: common.getId(req.params.id) }, {});
         if(req.apiAuthenticated){
-            res.status(200).json({ message: 'Usuniêto u¿ytkownika.' });
+            res.status(200).json({ message: 'Usuniï¿½to uï¿½ytkownika.' });
             return;
         }
-        req.session.message = 'Usuniêto u¿ytkownika.';
+        req.session.message = 'Usuniï¿½to uï¿½ytkownika.';
         req.session.messageType = 'success';
         res.redirect('/admin/users');
     }catch(ex){
@@ -262,9 +262,13 @@ router.post('/admin/user/update', restrict, async (req, res) => {
 });
 
 // insert a user
-router.post('/admin/user/insert', restrict, async (req, res) => {
+router.post('/admin/user/insert', async (req, res) => {
+	
+    console.log('aaaaaaaaaaaa');
+	
     const db = req.app.db;
-
+	
+	
     // set the account to admin if using the setup form. Eg: First user account
     const urlParts = req.get('Referrer');
 
@@ -276,6 +280,7 @@ router.post('/admin/user/insert', restrict, async (req, res) => {
     if(userCount === 0){
         isAdmin = true;
     }
+	
 
     const userObj = {
         usersName: req.body.usersName,
@@ -296,7 +301,7 @@ router.post('/admin/user/insert', restrict, async (req, res) => {
         res.redirect('/admin/user/new');
         return;
     }
-
+	
     // check for existing user
     const user = await db.users.findOne({ userEmail: req.body.userEmail });
     if(user){
@@ -339,6 +344,7 @@ router.post('/admin/user/insert', restrict, async (req, res) => {
         req.session.messageType = 'danger';
         res.redirect('/admin/user/new');
     }
+	console.error("dupa 3");
 });
 
 module.exports = router;

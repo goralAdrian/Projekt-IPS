@@ -8,8 +8,32 @@ router.get('/checkout_cancel', (req, res, next) => {
     res.redirect('/checkout');
 });
 
-router.get('/payNow', (req, res, next) => {
-	
+router.get('/pay/payNow', (req, res, next) => {
+    console.log('router /pay/payNow');
+    
+    const db = req.app.db;
+    const ordersCount = db.orders.countDocuments({});
+
+    user = req.session.user;
+    allMoney = req.session.totalCartAmount;
+	cart = req.session.cart;
+    
+	if(ordersCount)
+    {
+    id = ordersCount + 1;
+    }
+    else
+    {
+            id = ordersCount = 1;
+    }
+    db.orders.insertOne(
+            {
+			"id" : id,
+            "orderTotal" : allMoney,
+            "user" : mail,
+            "cart" : cart
+            }
+    )
 });
 
 
@@ -19,6 +43,9 @@ router.post('/checkout_action', (req, res, next) => {
 
 function ImPayFunction()
 {
+    
+    console.log('ImPayFunction');
+    
 	const db = req.app.db;
 	const ordersCount = db.orders.countDocuments({});
 	
