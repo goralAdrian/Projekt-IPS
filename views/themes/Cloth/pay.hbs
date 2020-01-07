@@ -17,7 +17,7 @@
                 <div class="panel-body customer-details-login">
                     <p>{{ @root.__ "Existing customer" }}</p>
 					{{#if @root.session.user}}
-					<a href="/payNow" class="btn btn-default pull-right">Zaakceptuj transakcję</a>
+					<a href="/pay/payNow" class="btn btn-default pull-right">Zaakceptuj transakcję</a>
 					{{else}}
 						<div class="form-group">
 							<a href="/admin/login" class="btn btn-default pull-right">Loguj się</a>

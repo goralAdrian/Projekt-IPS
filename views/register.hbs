@@ -1,19 +1,29 @@
 <div class="col-md-offset-4 col-md-4 col-lg-offset-4 col-lg-4" style="padding-top: 100px" >
-	<form class="form-signin"  method="post" role="form" data-toggle="validator">
-		<input type="hidden" name="frm_referringUrl" value="{{referringUrl}}">
-		<h2 class="form-signin-heading">Wpisz dane konta</h2>
-		<div class="form-group">
-			<input type="text" class="form-control" id="usersName" name="usersName" placeholder="Wpisz nazwę użytkownika" required>
+	<div class="row">
+		<div class="col-md-8">
+			<h2>{{ @root.__ "New User" }}</h2>
+			<form method="post" id="edit_form" action="/admin/user/insert" data-toggle="validator">
+            <div class="form-group">
+		    	<label>{{ @root.__ "Users name" }} *</label>
+		    	<input type="text" class="form-control" name="usersName" value="{{user.usersName}}" required>
+		  	</div>
+			<div class="form-group">
+		    	<label>{{ @root.__ "User email" }} *</label>
+		    	<input type="email" class="form-control" name="userEmail" value="{{user.userEmail}}" required>
+		  	</div>
+		  	<div class="form-group">
+			    <label>{{ @root.__ "User password" }} *</label>
+			    <input type="password" class="form-control" id="userPassword" name="userPassword" required>
+		  	</div>
+		  	<div class="form-group">
+			    <label>{{ @root.__ "Password confirm" }} *</label>
+			    <input type="password" data-match="#userPassword"  class="form-control" name="frm_userPassword_confirm" required>
+		  	</div>
+		  	<div class="form-group">
+    			<div class="pull-right">
+      				<button type="submit" class="btn btn-success">{{ @root.__ "Create" }}</button>
+    			</div>
+  			</div>
 		</div>
-		<div class="form-group">
-			<input type="text" class="form-control" id="usersEmail" name="usersEmail" placeholder="Wpisz adres e - mail" required>
-		</div>
-		<div class="form-group">
-			<input type="password" id="userPassword" name="userPassword" class="form-control" placeholder="Wpisz hasło" required>
-		</div>
-		<div class="form-group">
-			<input type="password" data-match="#userPassword" placeholder="Wpisz ponownie hasło" class="form-control" id="frm_userPassword_confirm" name="frm_userPassword_confirm" required>
-		</div>
-		<button class="btn btn-lg btn-primary btn-block" type="submit" id="registery">Rejestruj się</button>
-	</form>
+	</div>
 </div>
