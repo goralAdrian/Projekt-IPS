@@ -58,11 +58,11 @@ const product = require('./routes/product');
 const customer = require('./routes/customer');
 const order = require('./routes/order');
 const user = require('./routes/user');
-const paypal = require('./routes/payments/pay');
+//const paypal = require('./routes/payments/pay');
 const pay = require('./routes/payments/pay');
-const stripe = require('./routes/payments/pay');
-const authorizenet = require('./routes/payments/authorizenet');
-const adyen = require('./routes/payments/pay');
+//const stripe = require('./routes/payments/pay');
+//const authorizenet = require('./routes/payments/authorizenet');
+//const adyen = require('./routes/payments/pay');
 const imUser = require('./routes/imUser');
 const payNow = require('./routes/payNow');
 
@@ -309,6 +309,10 @@ app.use((req, res, next) => {
 
 // Ran on all routes
 app.use((req, res, next) => {
+    
+    console.log('Ran on all routes')
+    
+    
     res.setHeader('Cache-Control', 'no-cache, no-store');
     next();
 });
@@ -321,13 +325,24 @@ app.use('/', order);
 app.use('/', user);
 app.use('/', admin);
 app.use('/', users);
-app.use('/pay', pay);
-app.use('/authorizenet', authorizenet);
+//app.use('/pay', pay);
+//app.use('/authorizenet', authorizenet);
 app.use('/imUser', imUser);
-app.use('/payNow', payNow);
+app.use('/', pay);
+
+
+//app.use(function(req, res){
+//    console.log('404444444444444444')
+//       res.send(404);
+//   });
+
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
+    
+    console.log('404444444444444444')
+    
+    
     const err = new Error('Not Found');
     err.status = 404;
     next(err);
@@ -428,5 +443,8 @@ initDb(config.databaseConnectionString, async (err, db) => {
         process.exit(2);
     }
 });
-
+//app.use(function(req, res){
+//    console.log('404444444444444444')
+//       res.send(404);
+//   });
 module.exports = app;
