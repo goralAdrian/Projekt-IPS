@@ -2,7 +2,6 @@
 <div class="col-lg-9">
     <div class="col-lg-12">
 	{{#ifCond session.isAdmin '===' true}}
-        <h2>Zamówienia</h2>
 		{{/ifCond}}
     </div>
     <div class="col-lg-12 search_bar">
@@ -10,10 +9,11 @@
 
     <div class="col-lg-12 top-pad-10">
 	{{#ifCond session.isAdmin '===' true}}
+		Witamy administratora
         <ul class="list-group">
 			{{#each orders}}
 				<li class="list-group-item">
-					{{@root.Order}}
+						1
 				<li>
 			{{/each}}
 		</ul>
