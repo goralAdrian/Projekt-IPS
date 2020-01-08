@@ -13,3 +13,7 @@ By uruchomić stronę należy
     </ul>
   </li>
  </ul>
+
+Do wymagań, które komputer musi spełnić są:
+- zainstalowany npm
+- MongoDB compass
