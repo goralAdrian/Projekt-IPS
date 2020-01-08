@@ -87,7 +87,7 @@
         <div class="row">
             {{#if @root.session.cart}}
             <div class="col-xs-6 col s6 text-left align-right">
-                <button class="btn btn-danger" id="empty-cart" type="button">{{ @root.__ "Opróżnij koszyk" }}</button>
+                <button class="btn btn-danger" type="button">{{ @root.__ "Opróżnij koszyk" }}</button>
             </div>
             {{#ifCond page '!=' 'pay'}}
             <div class="text-right align-right col-xs-6 col s6">
