@@ -65,6 +65,7 @@ const pay = require('./routes/payments/pay');
 //const adyen = require('./routes/payments/pay');
 const imUser = require('./routes/imUser');
 const payNow = require('./routes/payNow');
+// const utf8 = require('utf8');
 
 const app = express();
 

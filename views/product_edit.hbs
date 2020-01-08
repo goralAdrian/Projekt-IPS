@@ -62,23 +62,6 @@
   
             
             <div class="form-group">
-                <label for="productComment" class="col-sm-2 control-label">{{ @root.__ "Allow comment" }}</label>
-                <div class="col-sm-10">
-                    <div class="checkbox">
-                        <label>
-                            <input class="productComment" type="checkbox" {{checkedState result.productComment}} id="productComment"
-                                name="productComment">
-                        </label>
-                    </div>
-                    <p class="help-block">{{ @root.__ "Allow free form comments when adding products to cart" }}</p>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="productTags" class="col-sm-2 control-label">{{ @root.__ "Product tag words" }}</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="productTags" name="productTags" value="{{result.productTags}}">
-                    <p class="help-block">{{ @root.__ "Tag words used to indexed products, making them easier to find and filter." }}</p>
-                </div>
             </div>
             <div id="product-images">
                 <h2>{{ @root.__ "Product images" }}</h2>
