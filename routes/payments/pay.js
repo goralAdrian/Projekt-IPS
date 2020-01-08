@@ -18,24 +18,21 @@ router.get('/pay/payNow', (req, res, next) => {
     user = req.session.user;
     allMoney = req.session.totalCartAmount;
 	cart = req.session.cart;
-    
-	if(ordersCount)
-    {
-    id = ordersCount + 1;
-    }
-    else
-    {
-            id = ordersCount = 1;
-    }
-    db.orders.insertOne(
-            {
-			"id" : id,
-            "orderTotal" : allMoney,
-            "user" : user,
-            "cart" : cart,
-            }
-    )
+    console.log(ordersCount);
+
+	db.orders.insertOne(
+				{
+				"orderTotal" : allMoney,
+				"user" : user,
+				"cart" : cart,
+				}
+		)
+	req.session.cart = null;
+	console.log(ordersCount);
 	console.log('dodano');
+	
+	
+	
 	res.redirect('/');
 });
 
