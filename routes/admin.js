@@ -26,7 +26,7 @@ router.get('/admin/logout', (req, res) => {
 
 router.get('/admin/register', (req, res) => {
     
-    console.error('sssssssssssssss')
+    // console.error('sssssssssssssss')
     
     
 	const db = req.app.db;

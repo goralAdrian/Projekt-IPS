@@ -18,13 +18,15 @@ router.get('admin/register', restrict, (req, res, next) => {
         userEmail: req.body.usersEmail,
         userPassword: bcrypt.hashSync(req.body.userPassword, 10),
         isAdmin: false,
-        isOwner: false
+        isOwner: false,
+		usersSurname ; req.body.usersSurname,
+		usersAddress ; req.body.usersAddress
     };
+	console.log(doc);
 	try{
             await db.users.insertOne(doc);
             req.session.message = 'User account inserted';
             req.session.messageType = 'success';
-			console.error("dupa");
             return;
         }catch(ex){
             console.error(colors.red('Nie uda³o siê wstawiæ u¿ytkownika: ' + ex));
@@ -33,6 +35,7 @@ router.get('admin/register', restrict, (req, res, next) => {
             res.redirect('/admin/register');
             return;
         }
+		
 });
 
 module.exports = router;
