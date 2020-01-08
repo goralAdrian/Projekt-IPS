@@ -59,6 +59,7 @@ router.get('/admin/login', async (req, res) => {
             helpers: req.handlebars.helpers,
             showFooter: 'showFooter'
         });
+		
     }else{
         // if there are no users set the "needsSetup" session
         req.session.needsSetup = true;
@@ -72,7 +73,7 @@ router.post('/admin/login_action', async (req, res) => {
 
     const user = await db.users.findOne({ userEmail: common.mongoSanitize(req.body.email) });
     if(!user || user === null){
-        res.status(400).json({ message: 'U�ytkownik o podanym mailu nie istnieje' });
+        res.status(400).json({ message: 'Uzytkownik o podanym mailu nie istnieje' });
         return;
     }
 
@@ -88,7 +89,7 @@ router.post('/admin/login_action', async (req, res) => {
             return;
         }
         // password is not correct
-        res.status(400).json({ message: 'Odmowa dost�pu, sprawd� has�o' });
+        res.status(400).json({ message: 'Odmowa dostepu, sprawdz haslo' });
     });
 });
 
@@ -138,7 +139,7 @@ router.post('/admin/setup_action', async (req, res) => {
             res.redirect('/admin/login');
             return;
         }catch(ex){
-            console.error(colors.red('Nie uda�o si� wstawi� u�ytkownika: ' + ex));
+            console.error(colors.red('Nie udalo sie wstawic uzytkownika: ' + ex));
             req.session.message = 'Setup failed';
             req.session.messageType = 'danger';
             res.redirect('/admin/setup');
@@ -182,7 +183,7 @@ router.post('/admin/createApiKey', restrict, checkAccess, async (req, res) => {
         res.status(200).json({ message: 'Wygenerowany klucz API:', apiKey: result.value.apiKey });
         return;
     }
-    res.status(400).json({ message: 'Nie uda�o si� wygenerowa� klucza API' });
+    res.status(400).json({ message: 'Nie udalo sie wygenerowac klucza API' });
 });
 
 // settings update
@@ -309,7 +310,7 @@ router.post('/admin/settings/page', restrict, checkAccess, async (req, res) => {
             res.status(200).json({ message: 'Utworzono now� stron� pomy�lnie', pageId: newDoc.insertedId });
             return;
         }catch(ex){
-            res.status(400).json({ message: 'Wyst�pi� b��d, prosz� spr�bowa� ponownie' });
+            res.status(400).json({ message: 'Wystapil blad, prosze sprobowac ponownie' });
         }
     }
 });
@@ -326,10 +327,10 @@ router.post('/admin/settings/page/delete', restrict, checkAccess, async (req, re
 
     try{
         await db.pages.deleteOne({ _id: common.getId(req.body.pageId) }, {});
-        res.status(200).json({ message: 'Stron� usuni�to pomy�lnie' });
+        res.status(200).json({ message: 'Strone usunieto pomyslnie' });
         return;
     }catch(ex){
-        res.status(400).json({ message: 'WYst�pi� b��d podczas usuwania strony, prosz� spr�bowa� ponownie' });
+        res.status(400).json({ message: 'WYstapil lad podczas usuwania strony' });
     }
 });
 
@@ -337,37 +338,37 @@ router.post('/admin/settings/page/delete', restrict, checkAccess, async (req, re
 router.post('/admin/settings/menu/new', restrict, checkAccess, (req, res) => {
     const result = common.newMenu(req);
     if(result === false){
-        res.status(400).json({ message: 'B��d podczas tworzenia menu' });
+        res.status(400).json({ message: 'Blad podczas tworzenia menu' });
         return;
     }
-    res.status(200).json({ message: 'Menu zosta�o utworzone poprawnie' });
+    res.status(200).json({ message: 'Menu zostalo utworzone poprawnie' });
 });
 
 // update existing menu item
 router.post('/admin/settings/menu/update', restrict, checkAccess, (req, res) => {
     const result = common.updateMenu(req);
     if(result === false){
-        res.status(400).json({ message: 'B��d podczas aktualizacji menu' });
+        res.status(400).json({ message: 'Blad podczas aktualizacji menu' });
         return;
     }
-    res.status(200).json({ message: 'Menu zosta�o zaktualizowane pomy�lnie.' });
+    res.status(200).json({ message: 'Menu zostalo zaktualizowane pomyslnie.' });
 });
 
 // delete menu item
 router.post('/admin/settings/menu/delete', restrict, checkAccess, (req, res) => {
     const result = common.deleteMenu(req, req.body.menuId);
     if(result === false){
-        res.status(400).json({ message: 'B��d podczas usuwania menu' });
+        res.status(400).json({ message: 'Blad podczas usuwania menu' });
         return;
     }
-    res.status(200).json({ message: 'Menu zosta�o usuni�te pomy�lnie.' });
+    res.status(200).json({ message: 'Menu zostalo usuniete pomyslnie.' });
 });
 
 // We call this via a Ajax call to save the order from the sortable list
 router.post('/admin/settings/menu/save_order', restrict, checkAccess, (req, res) => {
     const result = common.orderMenu(req, res);
     if(result === false){
-        res.status(400).json({ message: 'B��d podczas zmiany kolejno�ci menu' });
+        res.status(400).json({ message: 'Blad podczas zmiany kolejnosci menu' });
         return;
     }
     res.status(200);
@@ -388,10 +389,10 @@ router.post('/admin/api/validate_permalink', async (req, res) => {
 
     const products = await db.products.countDocuments(query);
     if(products && products > 0){
-        res.status(400).json({ message: 'Permalink ju� istnieje' });
+        res.status(400).json({ message: 'Permalink juz istnieje' });
         return;
     }
-    res.status(200).json({ message: 'Walidacja permalinku zosta�a uko�czona pomy�lnie' });
+    res.status(200).json({ message: 'Walidacja permalinku zostala ukon�czona pomyslnie' });
 });
 
 // upload the file
@@ -411,7 +412,7 @@ router.post('/admin/file/upload', restrict, checkAccess, upload.single('uploadFi
             fs.unlinkSync(file.path);
 
             // Return error
-            res.status(400).json({ message: 'Plik ma z�y format lub jest za du�y. Prosz� spr�bowa� ponownie.' });
+            res.status(400).json({ message: 'Plik ma zly format lub jest za duzy. Prosze sprobowac ponownie.' });
             return;
         }
 
@@ -422,7 +423,7 @@ router.post('/admin/file/upload', restrict, checkAccess, upload.single('uploadFi
             fs.unlinkSync(file.path);
 
             // Return error
-            res.status(400).json({ message: 'B��d podczas �adowania pliku na serwer. Prosz� spr�bowa� ponownie.' });
+            res.status(400).json({ message: 'Blad podczas ladowania pliku na serwer. Prosze sprobowac ponownie.' });
             return;
         }
 
@@ -449,19 +450,19 @@ router.post('/admin/file/upload', restrict, checkAccess, upload.single('uploadFi
             await db.products.updateOne({ _id: common.getId(req.body.productId) }, { $set: { productImage: imagePath } }, { multi: false });
         }
          // Return success message
-        res.status(200).json({ message: 'Plik zosta� wrzucony na stron� z sukcesem' });
+        res.status(200).json({ message: 'Plik zostal wrzucony na strone z sukcesem' });
         return;
     }
     // Return error
-    res.status(400).json({ message: 'B��d podczas wrzucenia pliku na stron�. Prosz� spr�bowa� ponownie.' });
+    res.status(400).json({ message: 'Blad podczas wrzucenia pliku na strone' });
 });
 
 // delete a file via ajax request
 router.post('/admin/testEmail', restrict, (req, res) => {
     const config = req.app.config;
     // TODO: Should fix this to properly handle result
-    common.sendEmail(config.emailAddress, 'Test adresu e-mail', 'Ustawienia Twojego adresu e-mail s� poprawne');
-    res.status(200).json({ message: 'Wys�ano test e-mail' });
+    common.sendEmail(config.emailAddress, 'Test adresu e-mail', 'Ustawienia Twojego adresu e-mail sa poprawne');
+    res.status(200).json({ message: 'Wyslano test e-mail' });
 });
 
 module.exports = router;

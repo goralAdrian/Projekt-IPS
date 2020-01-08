@@ -26,7 +26,7 @@ router.get('/payment/:orderId', async (req, res, next) => {
     // Get the order
     const order = await db.orders.findOne({ _id: getId(req.params.orderId) });
     if(!order){
-        res.render('error', { title: 'Nie znaleziono', message: 'Ksi��nki nie znaleziono', helpers: req.handlebars.helpers, config });
+        res.render('error', { title: 'Nie znaleziono', message: 'Ksiaznki nie znaleziono', helpers: req.handlebars.helpers, config });
         return;
     }
 
@@ -104,7 +104,7 @@ router.get('/pay', async (req, res, next) => {
 
     // if there is no items in the cart then render a failure
     if(!req.session.cart){
-        req.session.message = 'Tw�j koszyk jest pusty, dodaj ksi��k� :)';
+        req.session.message = 'Twoj koszyk jest pusty, dodaj ksiazke :)';
         req.session.messageType = 'danger';
         res.redirect('/checkout');
         return;
@@ -152,11 +152,11 @@ router.get('/product/:id', async (req, res) => {
 
     const product = await db.products.findOne({ $or: [{ _id: getId(req.params.id) }, { productPermalink: req.params.id }] });
     if(!product){
-        res.render('error', { title: 'Nie znaleziono', message: 'Zam�wienia nie znaleziono', helpers: req.handlebars.helpers, config });
+        res.render('error', { title: 'Nie znaleziono', message: 'Zamowienia nie znaleziono', helpers: req.handlebars.helpers, config });
         return;
     }
     if(product.productPublished === false){
-        res.render('error', { title: 'Nie znaleziono', message: 'Ksi��ki nie znaleziono', helpers: req.handlebars.helpers, config });
+        res.render('error', { title: 'Nie znaleziono', message: 'Ksiazki nie znaleziono', helpers: req.handlebars.helpers, config });
         return;
     }
     const productOptions = product.productOptions;
@@ -244,9 +244,9 @@ router.post('/product/updatecart', (req, res, next) => {
             res.status(200).json({ message: 'Koszyk zaktualizowano', totalCartItems: Object.keys(req.session.cart).length });
         }else{
             if(stockError){
-                res.status(400).json({ message: 'Niestety nie mamy �w ksi��ki na stanie', totalCartItems: Object.keys(req.session.cart).length });
+                res.status(400).json({ message: 'Niestety nie mamy ow ksiazki na stanie', totalCartItems: Object.keys(req.session.cart).length });
             }else{
-                res.status(400).json({ message: 'Podczas aktualizacji koszyka wkrad� si� b��d :/', totalCartItems: Object.keys(req.session.cart).length });
+                res.status(400).json({ message: 'Podczas aktualizacji koszyka wkradl sie blad :/', totalCartItems: Object.keys(req.session.cart).length });
             }
         }
     });
@@ -280,7 +280,7 @@ router.post('/product/removefromcart', async (req, res, next) => {
     if(itemRemoved === false){
         return res.status(400).json({ message: 'Koszyk jest pusty' });
     }
-    return res.status(200).json({ message: 'Ksi��nk� usuni�to pomy�lnie', totalCartItems: Object.keys(req.session.cart).length });
+    return res.status(200).json({ message: 'Ksiaznki usunieto pomyslnie', totalCartItems: Object.keys(req.session.cart).length });
 });
 
 // Totally empty the cart
@@ -347,7 +347,7 @@ router.post('/product/addtocart', async (req, res, next) => {
     // If existing cart isn't empty check if product is a subscription
     if(req.session.cart.length !== 0){
         if(product.productSubscription){
-            return res.status(400).json({ message: 'W koszyku jest za du�o ksi��ek, opr�nij koszyk i spr�buj ponownie' });
+            return res.status(400).json({ message: 'W koszyku jest za duzo ksiazek, opronij koszyk i sprobuj ponownie' });
         }
     }
 
@@ -380,7 +380,7 @@ router.post('/product/addtocart', async (req, res, next) => {
 
             // Check there is sufficient stock
             if(productQuantity > netStock){
-                return res.status(400).json({ message: 'Brakuje ksi��ek na stanie' });
+                return res.status(400).json({ message: 'Brakuje ksiazek na stanie' });
             }
         }
     }
@@ -642,7 +642,7 @@ router.get('/page/:pageNum', (req, res, next) => {
             });
         })
         .catch((err) => {
-            console.error(colors.red('B��d podczas pobierania ksi��ek na stron�', err));
+            console.error(colors.red('Blad podczas pobierania ksiazek na strone', err));
         });
 });
 
@@ -684,7 +684,7 @@ router.get('/:page?', async (req, res, next) => {
                 });
             })
             .catch((err) => {
-                console.error(colors.red('B��d podczas pobierania ksi��ek na stron�', err));
+                console.error(colors.red('Blad podczas pobierania ksiazek na strone', err));
             });
     }else{
         if(req.params.page === 'admin'){

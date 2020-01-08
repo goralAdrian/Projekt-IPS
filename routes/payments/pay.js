@@ -12,14 +12,13 @@ router.get('/pay/payNow', (req, res, next) => {
     console.log('router /pay/payNow');
     
     const db = req.app.db;
-    const ordersCount = db.orders.countDocuments({});
 
 	thisTime = new Date();
     user = req.session.user;
     allMoney = req.session.totalCartAmount;
 	cart = req.session.cart;
-    console.log(ordersCount);
-
+	console.log(cart);
+	
 	db.orders.insertOne(
 				{
 				"orderTotal" : allMoney,
@@ -29,7 +28,6 @@ router.get('/pay/payNow', (req, res, next) => {
 				}
 		)
 	req.session.cart = null;
-	console.log(ordersCount);
 	console.log('dodano');
 	
 	
