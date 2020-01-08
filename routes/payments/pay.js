@@ -14,7 +14,7 @@ router.get('/pay/payNow', (req, res, next) => {
     const db = req.app.db;
     const ordersCount = db.orders.countDocuments({});
 
-	
+	thisTime = new Date();
     user = req.session.user;
     allMoney = req.session.totalCartAmount;
 	cart = req.session.cart;
@@ -25,6 +25,7 @@ router.get('/pay/payNow', (req, res, next) => {
 				"orderTotal" : allMoney,
 				"user" : user,
 				"cart" : cart,
+				"thisTime" : thisTime
 				}
 		)
 	req.session.cart = null;

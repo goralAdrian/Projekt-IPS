@@ -9,8 +9,8 @@ router.get('/admin/orders', restrict, async (req, res, next) => {
     const db = req.app.db;
 
     // Top 10 products
-    const orders = await db.orders.find({}).sort({ orderDate: -1 }).limit(10).toArray();
-
+    const orders = await db.orders.find({}).sort({ orderDate: -1 }).toArray();
+	
     // If API request, return json
     if(req.apiAuthenticated){
         res.status(200).json({
@@ -18,6 +18,7 @@ router.get('/admin/orders', restrict, async (req, res, next) => {
         });
         return;
     }
+	console.log(orders);
 
     res.render('orders', {
         title: 'Cart',

@@ -15,16 +15,22 @@
     "productsPerRow": 3,
     "productsPerPage": 6,
     "menuTitle": "Menu",
-    "menuLocation": "side",
-    "footerHtml": "&lt;h3 class=&quot;text-center&quot;&gt;Księgarnia internetowa &lt;br&gt; Autorzy: Klaudia Cyran & Adrian Czupich &lt;/h3&gt; &lt;br&gt; &lt;center&gt;They're all wasted! &lt;/center&gt;",
+    "menuLocation": "top",
+    "footerHtml": "&lt;h3 class=&quot;text-center&quot;&gt;Ksi&eogon;garnia internetowa &lt;br&gt; Autorzy: Klaudia Cyran &amp; Adrian Czupich &lt;/h3&gt; &lt;br&gt; &lt;center&gt;They&apos;re all wasted! &lt;/center&gt;",
     "googleAnalytics": "",
-    "customCss": ".footer{padding-top: 5px;}",
+    "customCss": ".footer{padding-top:5px}",
     "currencySymbol": "PLN ",
     "paymentGateway": "stripe",
     "databaseConnectionString": "mongodb://127.0.0.1:27017/ksiegarnia",
     "theme": "Cloth",
     "trackStock": false,
     "orderHook": "",
-    "availableLanguages": ["pl"],
-    "defaultLocale": "pl"
+    "availableLanguages": [
+        "pl"
+    ],
+    "defaultLocale": "pl",
+    "secretCookie": "ae6077b4c6b27305a3675c49f3e93da9955adaa6",
+    "secretSession": "80de55b02174798761b0cf61510eacc819271f77",
+    "env": "",
+    "themeViews": "../views/themes/Cloth/"
 }
